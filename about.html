@@ -46,27 +46,77 @@
     }
     </style>
    <link href="headers.css" rel="stylesheet">
-   <div class="container">
-    <header class="d-flex flex-wrap py-3 mb-4 border-bottom justify-content-lg-center">
-      <a href="/" class="d-flex align-items-center mb-3 mb-md-0 me-md-auto text-dark text-decoration-none">
-        <svg class="bi me-2" width="40" height="32"><use xlink:href="#bootstrap"/></svg>
-      </a>
-  
-      <ul class="nav nav-pills center-nav">
-        <li class="nav-item"><a href="home.html" class="nav-link nav-text">Home</a></li>
-        <li class="nav-item"><a href="about.html" class="nav-link active nav-text">About</a></li>
-        <li class="nav-item"><a href="upload.html" class="nav-link nav-text">Upload</a></li>
-        <li class="nav-item"><a href="results.html" class="nav-link nav-text">Results</a></li>
-        <li class="nav-item"><a href="tips.html" class="nav-link nav-text">Tips</a></li>
-      </ul>
-    </header>
   </div>
   </head>
   
   <body>
-  <h1>About</h1>
-        <p>Welcome to the resume checker. Here you can test your resume against a hiring algorithm.</p>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/js/bootstrap.bundle.min.js" integrity="sha384-JEW9xMcG8R+pH31jmWH6WWP0WintQrMb4s7ZOdauHnUtxwoG2vI5DkLtS3qm9Ekf" crossorigin="anonymous"></script>
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+      <div class="container-fluid">
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbartoggler" aria-controls="navbartoggler" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbartoggler">
+          <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="currentColor" class="bi bi-clipboard-check" viewBox="0 0 16 16">
+            <path fill-rule="evenodd" d="M10.854 7.146a.5.5 0 0 1 0 .708l-3 3a.5.5 0 0 1-.708 0l-1.5-1.5a.5.5 0 1 1 .708-.708L7.5 9.793l2.646-2.647a.5.5 0 0 1 .708 0z"/>
+            <path d="M4 1.5H3a2 2 0 0 0-2 2V14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V3.5a2 2 0 0 0-2-2h-1v1h1a1 1 0 0 1 1 1V14a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1V3.5a1 1 0 0 1 1-1h1v-1z"/>
+            <path d="M9.5 1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-3a.5.5 0 0 1-.5-.5v-1a.5.5 0 0 1 .5-.5h3zm-3-1A1.5 1.5 0 0 0 5 1.5v1A1.5 1.5 0 0 0 6.5 4h3A1.5 1.5 0 0 0 11 2.5v-1A1.5 1.5 0 0 0 9.5 0h-3z"/>
+          </svg>
+          <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+            <li class="nav-item">
+              <a class="nav-link" aria-current="page" href="home.html">Home</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link active" href="about.html">About</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="results.html">Resume Checker</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="tips.html">Tips</a>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+    <div class="px-4 py-0 mt-5 text-center">
+      <h1 class="display-5 fw-bold">Our Goal</h1>
+      <div class="col-lg-6 mx-auto row justify-content-center">
+        <p class="lead mb-5 pb-5">With this simple website, we hope to educate people about the biases within applicant tracking systems and how they can combat and overcome them.</p>
+    </div>
+    <hr class="featurette-divider">
+    <div class="row featurette align-items-center mb-4">
+      <div class="col-md-6">
+      <h2 class="featurette-heading">Design Bias Within Algorithms. <span class="text-muted">How computers become biased.</span></h2>
+      <p class="lead">By running your resume through an open-source applicant tracking system, we can show you exactly how strong your resume.</p>
+      </div>
+      <div class="col-md-6">
+       <img class ="img-thumbnail" src=resume_img.jpeg alt="Resume" width="600" height="400">
+      </div>
+     </div>
+    <hr class="featurette-divider">
 
+   <div class="row featurette align-items-center mb-4">
+    <div class="col-md-6 order-md-2">
+     <h2 class="featurette-heading">Applicant Tracking Systems. <span   class="text-muted">Automated tracking and rating of employee prospects.</span></h2>
+     <p class="lead">Using our tips page, you can take your resume to the next level with informed decision-making.</p>
+    </div>
+      <div class="col-md-6 order-md-1">
+        <img class="img-thumbnail" src=thumbsup_img.jpeg alt="Resume" width="600" height="400">
+      </div>  
+   </div>
+   <hr class="featurette-divider">
+   <div class="row featurette align-items-center mb-4">
+    <div class="col-md-6">
+    <h2 class="featurette-heading">What this means for you. <span class="text-muted">How the two come together.</span></h2>
+    <p class="lead">By running your resume through an open-source applicant tracking system, we can show you exactly how strong your resume.</p>
+    </div>
+    <div class="col-md-6">
+     <img class ="img-thumbnail" src=resume_img.jpeg alt="Resume" width="600" height="400">
+    </div>
+   </div>
+  
+   
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/js/bootstrap.bundle.min.js" integrity="sha384-JEW9xMcG8R+pH31jmWH6WWP0WintQrMb4s7ZOdauHnUtxwoG2vI5DkLtS3qm9Ekf" crossorigin="anonymous"></script>
   </body>
 </html>
