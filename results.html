@@ -44,35 +44,48 @@
     }
     </style>
    <link href="headers.css" rel="stylesheet">
-   <div class="container">
-    <header class="d-flex flex-wrap py-3 mb-4 border-bottom justify-content-lg-center">
-      <a href="/" class="d-flex align-items-center mb-3 mb-md-0 me-md-auto text-dark text-decoration-none">
-        <svg class="bi me-2" width="40" height="32"><use xlink:href="#bootstrap"/></svg>
-      </a>
-  
-      <ul class="nav nav-pills center-nav">
-        <li class="nav-item"><a href="home.html" class="nav-link nav-text">Home</a></li>
-        <li class="nav-item"><a href="about.html" class="nav-link nav-text">About</a></li>
-        <li class="nav-item"><a href="upload.html" class="nav-link nav-text">Upload</a></li>
-        <li class="nav-item"><a href="results.html" class="nav-link active nav-text">Results</a></li>
-        <li class="nav-item"><a href="tips.html" class="nav-link nav-text">Tips</a></li>
-      </ul>
-    </header>
   </div>
     </head>
 
     <body>
-
-        <h1>Results</h1>
-        <p>Below you will find a detailed breakdown of what the algortihm thought of your resume.</p>
-        <div>
-            <label for="results_summary">Summary:</label><br>
-            <textarea id="results_summary" rows="20" cols="40"></textarea><br>
-            <button>Visual Analysis</button>
+      <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <div class="container-fluid">
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbartoggler" aria-controls="navbartoggler" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+          </button>
+          <div class="collapse navbar-collapse" id="navbartoggler">
+            <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="currentColor" class="bi bi-clipboard-check" viewBox="0 0 16 16">
+              <path fill-rule="evenodd" d="M10.854 7.146a.5.5 0 0 1 0 .708l-3 3a.5.5 0 0 1-.708 0l-1.5-1.5a.5.5 0 1 1 .708-.708L7.5 9.793l2.646-2.647a.5.5 0 0 1 .708 0z"/>
+              <path d="M4 1.5H3a2 2 0 0 0-2 2V14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V3.5a2 2 0 0 0-2-2h-1v1h1a1 1 0 0 1 1 1V14a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1V3.5a1 1 0 0 1 1-1h1v-1z"/>
+              <path d="M9.5 1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-3a.5.5 0 0 1-.5-.5v-1a.5.5 0 0 1 .5-.5h3zm-3-1A1.5 1.5 0 0 0 5 1.5v1A1.5 1.5 0 0 0 6.5 4h3A1.5 1.5 0 0 0 11 2.5v-1A1.5 1.5 0 0 0 9.5 0h-3z"/>
+            </svg>
+            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+              <li class="nav-item">
+                <a class="nav-link" aria-current="page" href="home.html">Home</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="about.html">About</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link active" href="results.html">Resume Checker</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="tips.html">Tips</a>
+              </li>
+            </ul>
+          </div>
         </div>
-        <div>
-            <label>Feel free to upload another resume...</label><br>
-            <button><a href="upload.html">Return to Upload Page</a></button>
+      </nav>
+      <div class="px-4 py-0 my-5 text-center justify-content-center">
+        <h1 class="display-5 fw-bold">Resume Checker</h1>
+        <div class="col-lg-6 mx-auto row justify-content-center">
+          <p class="lead mb-4">Upload your resume to begin.</p>
+          <form action="/action_page.php">
+          <div class="custom-file mb-3 col-md-6 offset-md-3">
+            <input type="file" class="form-control" id="customFile" name="filename" accept=".doc, .docx">
+          </div>
+          </form>
         </div>
+      <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/js/bootstrap.bundle.min.js" integrity="sha384-JEW9xMcG8R+pH31jmWH6WWP0WintQrMb4s7ZOdauHnUtxwoG2vI5DkLtS3qm9Ekf" crossorigin="anonymous"></script>
     </body>
 </html>
