@@ -1,0 +1,28 @@
+{% extends 'base.html' %}
+
+{% block header %}
+{% endblock %}
+
+{% block content %}
+      <div class="px-4 py-0 my-5 text-center justify-content-center">
+        <h1 class="display-5 fw-bold">Resume Checker</h1>
+        <div class="col-lg-6 mx-auto row justify-content-center">
+          <p class="lead mb-4">Upload your resume to begin.</p>
+          <div class="col-md-4">
+            <select class="form-select" aria-label="Default select example">
+              <option selected>Choose your profession</option>
+              <option value="1">IT</option>
+              <option value="2">Retail</option>
+              <option value="3">Management</option>
+              <option value="4">Finance</option>
+              <option value="5">Education</option>
+              <option value="6">Hospitality</option>
+            </select>
+          </div>    
+          <form action="/action_page.php">
+          <div class="custom-file mb-3 col-md-6 offset-md-3">
+            <input type="file" class="form-control" id="customFile" name="filename" accept=".doc, .docx">
+          </div>
+          </form>
+        </div>
+{% endblock %}

@@ -1,0 +1,61 @@
+{% extends 'base.html' %}
+
+{% block header %}
+{% endblock %}
+
+
+{% block content %}
+        <div class="px-4 py-0 my-5 text-center">
+         <h1 class="display-5 fw-bold">Resume Checker</h1>
+        <div class="col-lg-6 mx-auto row justify-content-center">
+          <p class="lead mb-4">Welcome to the resume checker. Here you can test your resume against a hiring algorithm.</p>
+        </div>
+
+
+        <div class="container marketing">
+          <div class="row justify-content-center">
+            <div class="col-lg-4 mb-4">
+              <svg xmlns="http://www.w3.org/2000/svg" width="140" height="140" fill="currentColor" class="bi bi-upload" viewBox="0 0 16 16">
+                <path d="M.5 9.9a.5.5 0 0 1 .5.5v2.5a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1v-2.5a.5.5 0 0 1 1 0v2.5a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2v-2.5a.5.5 0 0 1 .5-.5z"/>
+                <path d="M7.646 1.146a.5.5 0 0 1 .708 0l3 3a.5.5 0 0 1-.708.708L8.5 2.707V11.5a.5.5 0 0 1-1 0V2.707L5.354 4.854a.5.5 0 1 1-.708-.708l3-3z"/>
+              </svg>
+              <h2>Upload a Resume</h2>
+              <p>Upload a resume here to test it's strength against an applicant tracking system.</p>
+              <p><a class="btn btn-secondary" href="/upload">Upload here &raquo;</a></p>
+            </div><!-- /.col-lg-4 -->
+            <div class="col-lg-4">
+              <svg xmlns="http://www.w3.org/2000/svg" width="140" height="140" fill="currentColor" class="bi bi-clipboard-check" viewBox="0 0 16 16">
+                <path fill-rule="evenodd" d="M10.854 7.146a.5.5 0 0 1 0 .708l-3 3a.5.5 0 0 1-.708 0l-1.5-1.5a.5.5 0 1 1 .708-.708L7.5 9.793l2.646-2.647a.5.5 0 0 1 .708 0z"/>
+                <path d="M4 1.5H3a2 2 0 0 0-2 2V14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V3.5a2 2 0 0 0-2-2h-1v1h1a1 1 0 0 1 1 1V14a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1V3.5a1 1 0 0 1 1-1h1v-1z"/>
+                <path d="M9.5 1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-3a.5.5 0 0 1-.5-.5v-1a.5.5 0 0 1 .5-.5h3zm-3-1A1.5 1.5 0 0 0 5 1.5v1A1.5 1.5 0 0 0 6.5 4h3A1.5 1.5 0 0 0 11 2.5v-1A1.5 1.5 0 0 0 9.5 0h-3z"/>
+              </svg>
+      
+              <h2>View Resume Writing Tips</h2>
+              <p>View tips to imrpove your resume writing skills to get that job you always wanted.</p>
+              <p><a class="btn btn-secondary" href="/tips">View tips here &raquo;</a></p>
+            </div><!-- /.col-lg-4 -->
+            <hr class="featurette-divider">
+  
+            <div class="row featurette align-items-center mb-4">
+             <div class="col-md-6">
+             <h2 class="featurette-heading">Resume Checking. <span class="text-muted">Rating your resume's strength.</span></h2>
+             <p class="lead">By running your resume through an open-source applicant tracking system, we can show you exactly how strong your resume is.</p>
+             </div>
+             <div class="col-md-6">
+              <img class ="img-thumbnail" src=static/images/resume_img.jpeg alt="Resume" width="600" height="400">
+  
+             </div>
+            </div>
+            <hr class="featurette-divider">
+  
+          <div class="row featurette align-items-center mb-4">
+          <div class="col-md-6 order-md-2">
+            <h2 class="featurette-heading">Resume Writing Tips. <span   class="text-muted">Improve your resume writing skills.</span></h2>
+            <p class="lead">Using our tips page, you can take your resume to the next level with informed decision-making.</p>
+          </div>
+         <div class="col-md-6 order-md-1">
+          <img class="img-thumbnail" src=static/images/thumbsup_img.jpeg alt="Resume" width="600" height="400">
+  
+          </div>
+        </div>
+{% endblock %}
