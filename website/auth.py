@@ -86,12 +86,12 @@ def register():
     #the validation of form submis is fine
     if (register.validate_on_submit() == True):
             #get username, password, contact number, address and email from the form
-            uname =register.username.data
+            uname =register.name.data
             pwd = register.password.data
             email=register.email.data
-            contact_number = register.contactnumber.data
-            address = register.address.data
-            role=register.role.data
+            area_of_expertise = register.area_of_expertise.data
+            gender = register.gender.data
+            birthdate = register.birthdate.data
             #check if a user exists
             u1 = User.query.filter_by(name=uname).first()
             if u1:
@@ -100,7 +100,7 @@ def register():
             # don't store the password - create password hash
             pwd_hash = generate_password_hash(pwd)
             #create a new user model object
-            new_user = User(name=uname, password_hash=pwd_hash, emailid=email, contact_number = contact_number, address= address)
+            new_user = User(name=uname, password_hash=pwd_hash, email=email, area_of_expertise = area_of_expertise, gender= gender, birthdate = birthdate)
             db.session.add(new_user)
             db.session.commit()
             #commit to the database and redirect to HTML page

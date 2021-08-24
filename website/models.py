@@ -2,17 +2,25 @@ from datetime import datetime
 from enum import unique
 from . import db
 from flask_login import UserMixin
+from hashlib import md5
 
 
 
 class User(db.Model,UserMixin):
     __tablename__ = 'users'
-    id = db.Column(db.Integer, primary_key=True)
+    user_id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(100), index=True, nullable=True)
+    email = db.Column(db.String(100), unique=True, index=True, nullable=True)
     gender = db.Column(db.String(100), index=True, nullable=True)
     birthdate = db.Column(db.DateTime, index=True, nullable=True)
-    emailid = db.Column(db.String(100), unique=True, index=True, nullable=True)
+    area_of_expertise = db.Column(db.String(100), index=True, nullable=True)
     password_hash = db.Column(db.String(10), nullable=False)
+
+    def avatar(self, size):
+        digest = md5(self.email.lower().encode('utf-8')).hexdigest()
+        return 'https://www.gravatar.com/avatar/{}?d=identicon&s={}'.format(
+            digest, size)
+
     
     
     # Flask-Login integration
@@ -29,4 +37,4 @@ class User(db.Model,UserMixin):
         return False
 
     def get_id(self):
-        return self.id
+        return self.user_id

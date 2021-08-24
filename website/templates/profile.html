@@ -1,0 +1,32 @@
+{% extends 'base.html' %}
+
+{% block header %}
+    <div class="row featurette align-items-center mb-4 justify-content-center">
+        <div class="row container col-md-4 pl-5 justify-content-center">
+            <div class="col-md-4">
+                <img src="{{ user.avatar(128) }}">
+               </div>
+            <div class="col-md-6">
+                <h1>User: {{ user.name }}</h1>
+            </div>
+        </div>
+    </div>
+    <div class="row featurette align-items-center mb-4 justify-content-center">
+        <div class="row container col-md-4 pl-5">
+            <div class="col-md-4">
+                <h2>Gender: {{user.gender }}</h2>
+            </div>
+            <div class="col-md-4">
+                <h2>Date of Birth: {{user.birthdate }}</h2>
+            </div>
+            <div class="col-md-4">
+                <h2>Area of Expertise: {{user.area_of_expertise }}</h2>
+            </div>
+        </div>
+    </div>
+            
+{% endblock %}
+
+{% block content %}
+
+{% endblock %}
