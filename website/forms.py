@@ -21,10 +21,12 @@ class LoginForm(FlaskForm):
 class RegisterForm(FlaskForm):
     name = StringField('Name', validators=[InputRequired('Please enter your full name')])
     email = StringField('Email', validators=[InputRequired('Please enter an email'), Email()])
+    gender = StringField('Gender', validators=[InputRequired('Please enter your gender')])
+    birthdate = DateField('Date of Birth', validators=[DataRequired('Please enter your date of birth')])
+    area_of_expertise = StringField('Area of Expertise', validators=[InputRequired('Please enter your area of expertise')])
     password = PasswordField('Password', validators=[InputRequired('Please enter a password')])
     confirm = PasswordField('Password Confirmation', validators=[InputRequired(), EqualTo('password', 'Passwords do not match')])
-    #gender = SelectField('Gender', choices=[])
-    birthdate = DateField('Date of Birth', validators=[DataRequired('Please enter your date of birth')])
+    
     
 
 
