@@ -1,7 +1,6 @@
 from flask import Blueprint, render_template, request, session, url_for, flash, redirect
 from flask_login.utils import login_required
 from .models import User, Resume, ResumeLog
-#from website.models import Event
 
 mainbp = Blueprint('main', __name__)
 
@@ -30,9 +29,24 @@ def upload():
 @login_required
 def profile (user_id):
   user = User.query.filter_by(user_id=user_id).first_or_404()
+  resume = Resume.query.filter_by(user_id=user_id)
+  resumelog = ResumeLog.query.filter_by(user_id=user_id)
   if user is None:
-    flash(f'You must be logged in to see your profile')
+    flash(f'You must be logged in to see your profile', 'danger')
     return redirect('/')
   else:
 
-    return render_template('profile.html', user=user)
+    return render_template('profile.html', user=user, resume=resume, resumelog=resumelog)
+
+@mainbp.route('/resume/<user_id>/<resume_id>', methods=['GET'])
+@login_required
+def resume (user_id,resume_id):
+  user = User.query.filter_by(user_id=user_id).first_or_404()
+  resume = Resume.query.filter_by(resume_id=resume_id).first_or_404()
+  resumelog = ResumeLog.query.filter_by(user_id=user_id)
+  if user is None:
+    flash(f'You must be logged in to see your resumes', 'danger')
+    return redirect('/')
+  else:
+
+    return render_template('resume.html', user=user, resume=resume, resumelog=resumelog)
