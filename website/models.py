@@ -38,3 +38,23 @@ class User(db.Model,UserMixin):
 
     def get_id(self):
         return self.user_id
+
+class Resume(db.Model):
+    __tablename__ = 'resumes'  
+    resume_id = db.Column(db.Integer, primary_key=True)
+    area_of_expertise = db.Column(db.String(100), index=True, nullable=True)
+    resumecontents = db.Column(db.String(400))
+
+    # foreign keys
+    name = db.Column(db.String(100), db.ForeignKey('users.name'))
+
+
+
+class ResumeLog(db.Model):
+    __tablename__ = 'resumelog' 
+    resumelog_id = db.Column(db.Integer, primary_key=True)
+    result = db.Column(db.Integer)
+
+    # foreign keys
+    name = db.Column(db.String(100), db.ForeignKey('users.name'))
+    resume_id = db.Column(db.Integer, db.ForeignKey('users.name'))

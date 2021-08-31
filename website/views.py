@@ -1,6 +1,6 @@
 from flask import Blueprint, render_template, request, session, url_for, flash, redirect
 from flask_login.utils import login_required
-from .models import User
+from .models import User, Resume, ResumeLog
 #from website.models import Event
 
 mainbp = Blueprint('main', __name__)
