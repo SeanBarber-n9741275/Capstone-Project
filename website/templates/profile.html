@@ -24,9 +24,32 @@
             </div>
         </div>
     </div>
+
+        
+
+    
             
 {% endblock %}
 
 {% block content %}
+    <div class="row featurette align-items-center justify-content-center">
+        <div class="row container col-md-3 pl-5 justify-content-center">
+            <h3>Below are your resumes.</h3>
+        </div>
+    </div>
+    <div class="container mx-auto row card-group col-md-11">
+        {% for resume in resume %}
+        <div class="col-md-4 mb-5 mt-5 mx-auto">
+            <div class="card">
+                <h4 class="card-title">{{ resume.resumename }}</h4>
+                <p class="card-text card-overflow">{{ resume.area_of_expertise }}</p>
+                <a href="{{ url_for('main.resume',user_id=user.user_id,resume_id=resume.resume_id) }}" class="stretched-link"></a>
+              </div>
+            </div>                         
+          </div>
+    
+        {% endfor %}
+    </div>
 
+               
 {% endblock %}

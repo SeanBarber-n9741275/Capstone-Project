@@ -12,7 +12,7 @@ class User(db.Model,UserMixin):
     name = db.Column(db.String(100), index=True, nullable=True)
     email = db.Column(db.String(100), unique=True, index=True, nullable=True)
     gender = db.Column(db.String(100), index=True, nullable=True)
-    birthdate = db.Column(db.DateTime, index=True, nullable=True)
+    birthdate = db.Column(db.Date, index=True, nullable=True)
     area_of_expertise = db.Column(db.String(100), index=True, nullable=True)
     password_hash = db.Column(db.String(10), nullable=False)
 
@@ -42,11 +42,12 @@ class User(db.Model,UserMixin):
 class Resume(db.Model):
     __tablename__ = 'resumes'  
     resume_id = db.Column(db.Integer, primary_key=True)
+    resumename = db.Column(db.String(100))
     area_of_expertise = db.Column(db.String(100), index=True, nullable=True)
     resumecontents = db.Column(db.String(400))
 
     # foreign keys
-    name = db.Column(db.String(100), db.ForeignKey('users.name'))
+    user_id = db.Column(db.Integer, db.ForeignKey('users.user_id'))
 
 
 
@@ -56,5 +57,5 @@ class ResumeLog(db.Model):
     result = db.Column(db.Integer)
 
     # foreign keys
-    name = db.Column(db.String(100), db.ForeignKey('users.name'))
-    resume_id = db.Column(db.Integer, db.ForeignKey('users.name'))
+    user_id = db.Column(db.Integer, db.ForeignKey('users.user_id'))
+    resume_id = db.Column(db.Integer, db.ForeignKey('resumes.resume_id'))
