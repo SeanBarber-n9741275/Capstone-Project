@@ -1,4 +1,4 @@
-from flask import Flask, Response, redirect
+from flask import Flask, Response, redirect, flash, render_template
 from flask.helpers import url_for
 from flask_bootstrap import Bootstrap
 from flask_sqlalchemy import SQLAlchemy
@@ -6,6 +6,10 @@ from flask_login import LoginManager
 import os
 
 db=SQLAlchemy()
+
+def page_not_found(e):
+    flash(f'Page not found', 'danger')
+    return redirect('/')
 
 #create a function that creates a web application
 # a web server will run this web application
@@ -34,12 +38,13 @@ def create_app():
     #create a user loader function takes userid and returns User
     from .models import User #importing here to avoid circular references
     @login_manager.user_loader 
-    def load_user(user_id):
+    def user_loader(user_id):
         return User.query.get(int(user_id))
 
     from website import views, auth
     app.register_blueprint(views.mainbp)
     app.register_blueprint(auth.bp)
+    app.register_error_handler(404, page_not_found)
 
 
     return app

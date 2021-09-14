@@ -41,18 +41,6 @@ def login_required_admin(f):
             return redirect('/')
     return wrap
 
-def login_required_tickets(f):
-    @wraps(f)
-    def wrap(*args, **kwargs):
-        if current_user.is_authenticated:
-            return f(*args, **kwargs)
-        else:
-            flash("You must be logged in to purchase tickets.", 'danger')
-            return redirect(request.url)
-    return wrap
-
-
-
 class Anonymous(AnonymousUserMixin):
     def __init__(self):
         self.role = 'customer'
@@ -67,16 +55,16 @@ def login():
         u1 = User.query.filter_by(name=user_name).first()
         #if there is no user with that name
         if u1 is None:
-            error='Incorrect user name'
+            error='Incorrect user name or password'
         #check the password - notice password hash function
         elif not check_password_hash(u1.password_hash, password): # takes the hash and password
-            error='Incorrect password'
+            error='Incorrect user name or password'
         if error is None:
             #all good, set the login_user of flask_login to manage the user
             login_user(u1)
             return redirect(url_for('main.index'))
         else:
-            flash(error)
+            flash(error, 'danger')
 
     return render_template('user.html', form=login_form,  heading='Login')
 
@@ -95,7 +83,7 @@ def register():
             #check if a user exists
             u1 = User.query.filter_by(name=uname).first()
             if u1:
-                flash('User name already exists, please login')
+                flash('User name already exists, please login', 'danger')
                 return redirect(url_for('auth.login'))
             # don't store the password - create password hash
             pwd_hash = generate_password_hash(pwd)

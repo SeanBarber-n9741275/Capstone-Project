@@ -30,7 +30,7 @@ class RegisterForm(FlaskForm):
     
 
 
-    submit = SubmitField('Login')
+    submit = SubmitField('Register')
 
 
 

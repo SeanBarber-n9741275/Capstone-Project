@@ -35,3 +35,15 @@ text-align: center;
   color:white;
   box-shadow:0 12px 16px 0 rgba(0,0,0,0.24),0 17px 50px 0 rgba(0,0,0,0.19);
 }
+
+.btn-default {
+  border: 1px solid #ddd;
+  margin: 0 auto;
+  margin-top:20px;
+  display: block;
+}
+
+.page-header {
+  margin: 0 auto;
+  display:block;
+}
