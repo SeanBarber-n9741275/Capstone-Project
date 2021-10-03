@@ -3,6 +3,9 @@ from flask_login import current_user
 from flask_login.mixins import UserMixin
 from .auth import login_required
 from .models import User, Resume, ResumeLog
+from website.results import get_results
+import pandas as pd
+compare_csv = pd.read_csv("website/resume.csv")
 
 mainbp = Blueprint('main', __name__)
 
@@ -44,4 +47,14 @@ def resume (user_id,resume_id):
   resumelog = ResumeLog.query.filter_by(user_id=user.user_id)
 
   return render_template('resume.html', user=user, resume=resume, resumelog=resumelog)
-  
+
+
+@mainbp.route('/results/<user_id>/<resume_id>', methods=['GET'])
+#@login_required
+def results (user_id,resume_id):
+#  user = User.query.filter_by(user_id=current_user.user_id).first_or_404()
+#  resume = Resume.query.filter_by(user_id=current_user.user_id).first_or_404()
+#  resumelog = ResumeLog.query.filter_by(user_id=user.user_id)
+  results = get_results(compare_csv)
+
+  return render_template('results.html', results=results)#user=user, resume=resume, resumelog=resumelog, results=results)
