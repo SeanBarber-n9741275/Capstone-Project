@@ -43,7 +43,6 @@ class Resume(db.Model):
     __tablename__ = 'resumes'  
     resume_id = db.Column(db.Integer, primary_key=True)
     resumename = db.Column(db.String(100))
-    area_of_expertise = db.Column(db.String(100), index=True, nullable=True)
     resumecontents = db.Column(db.String(400))
 
     # foreign keys
