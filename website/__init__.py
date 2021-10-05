@@ -7,7 +7,7 @@ import os
 
 db=SQLAlchemy()
 
-UPLOAD_FOLDER = 'website/resumes/'
+UPLOAD_FOLDER = 'website/static/resumes/'
 ALLOWED_EXTENSIONS = {'txt', 'pdf'} 
 
 def allowed_file(filename):

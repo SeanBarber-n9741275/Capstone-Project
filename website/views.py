@@ -46,7 +46,7 @@ def upload():
         if resume and allowed_file(resume.filename):
             filename = secure_filename(resume.filename)
             resume.save(os.path.join(current_app.config['UPLOAD_FOLDER'], filename))
-            newResume = Resume(user_id=current_user.user_id, resumename=resume.filename, resumecontents=(os.path.join(current_app.config['UPLOAD_FOLDER'], filename)))
+            newResume = Resume(user_id=current_user.user_id, resumename=resume.filename, resumecontents=(os.path.join('static/resumes', filename)))
             db.session.add(newResume)
             db.session.commit()
             return render_template('upload.html')
