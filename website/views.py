@@ -4,6 +4,10 @@ from flask_login.mixins import UserMixin
 from .auth import login_required
 from .models import User, Resume, ResumeLog
 from website.results import get_results
+import pandas as pd
+import json
+import plotly
+import plotly.express as px
 sample_pdf = open('website/static/Sample_Resume2.pdf', 'rb')
 
 mainbp = Blueprint('main', __name__)
@@ -55,5 +59,13 @@ def results ():#user_id,resume_id):
   resume = Resume.query.filter_by(user_id=0)#.first_or_404()
 #  resumelog = ResumeLog.query.filter_by(user_id=user.user_id)
   results = get_results(sample_pdf)
+  df = pd.DataFrame({
+    "Keyword": results[0],
+    "Score": results[1]
+  })
 
-  return render_template('results.html', results_labels=results[0], results_values=results[1], resume=resume)#user=user,, resumelog=resumelog, results=results)
+  fig = px.bar(df, x="Score", y="Keyword", orientation="h")
+
+  graphJSON = json.dumps(fig, cls=plotly.utils.PlotlyJSONEncoder)
+
+  return render_template('results.html', graphJSON=graphJSON, results_labels=results[0], results_values=results[1], resume=resume)#user=user,, resumelog=resumelog, results=results)
