@@ -51,12 +51,14 @@ def get_results(tocompare):
         #print(kw)
         keywords_stemmed.append((kw[0], kw_stemmed, kw[1]))
 
-    results = []
+    results_label = []
+    results_values = []
     for kw in keywords_stemmed:
         for index, row in prepared.topic_info.iterrows():
             if row['Term'] in kw[1]:
-                results.append((kw[0], row['Freq']/kw[2]/100000)) #row['Term'],
+                results_label.append(kw[0])
+                results_values.append(row['Freq']/kw[2]/100000)
                 break
-    return results
+    return results_label, results_values
 
 #print(get_results(compare_csv));
