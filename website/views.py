@@ -55,7 +55,8 @@ def upload():
             newResume = Resume(user_id=current_user.user_id, resumename=resume.filename, resumecontents=(os.path.join('static/resumes', filename)))
             db.session.add(newResume)
             db.session.commit()
-            return render_template('upload.html')
+            new_id = newResume.resume_id
+            return redirect("/results/%s/%s" % (current_user.user_id, new_id))
 
     return render_template('upload.html')
 
@@ -72,19 +73,20 @@ def profile (user_id):
 @login_required
 def resume (user_id,resume_id):
   user = User.query.filter_by(user_id=current_user.user_id).first_or_404()
-  resume = Resume.query.filter_by(user_id=current_user.user_id).first_or_404()
-  resumelog = ResumeLog.query.filter_by(user_id=user.user_id)
+  resume = Resume.query.filter_by(resume_id=resume_id).first_or_404()
+  resumelog = ResumeLog.query.filter_by(resume_id=resume_id)
 
   return render_template('resume.html', user=user, resume=resume, resumelog=resumelog)
 
 
-@mainbp.route('/results')#/<user_id>/<resume_id>', methods=['GET'])
-#@login_required
-def results ():#user_id,resume_id):
-#  user = User.query.filter_by(user_id=current_user.user_id).first_or_404()
-  resume = Resume.query.filter_by(user_id=0)#.first_or_404()
-#  resumelog = ResumeLog.query.filter_by(user_id=user.user_id)
-  results = get_results(sample_pdf)
+@mainbp.route('/results/<user_id>/<resume_id>', methods=['GET'])
+@login_required
+def results (user_id,resume_id):
+  user = User.query.filter_by(user_id=current_user.user_id).first_or_404()
+  resume = Resume.query.filter_by(resume_id=resume_id).first_or_404()
+  resumelog = ResumeLog.query.filter_by(resume_id=resume_id)
+  resumefile = open("website/" + resume.resumecontents, 'rb')
+  results = get_results(resumefile)
   df = pd.DataFrame({
     "Keyword": results[0],
     "Score": results[1]
