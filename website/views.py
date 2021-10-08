@@ -33,6 +33,7 @@ def tips():
 @login_required
 def upload():
     if request.method == 'POST':
+        expertise = request.form.get('expertise')
         # check if the post request has the file part
         if 'resume' not in request.files:
             flash('No resume')
@@ -46,7 +47,7 @@ def upload():
         if resume and allowed_file(resume.filename):
             filename = secure_filename(resume.filename)
             resume.save(os.path.join(current_app.config['UPLOAD_FOLDER'], filename))
-            newResume = Resume(user_id=current_user.user_id, resumename=resume.filename, resumecontents=(os.path.join('static/resumes', filename)))
+            newResume = Resume(user_id=current_user.user_id, resumename=resume.filename, area_of_expertise=expertise, resumecontents=(os.path.join('static/resumes', filename)))
             db.session.add(newResume)
             db.session.commit()
             return render_template('upload.html')
@@ -66,8 +67,8 @@ def profile (user_id):
 @login_required
 def resume (user_id,resume_id):
   user = User.query.filter_by(user_id=current_user.user_id).first_or_404()
-  resume = Resume.query.filter_by(user_id=current_user.user_id).first_or_404()
-  resumelog = ResumeLog.query.filter_by(user_id=user.user_id)
+  resume = Resume.query.filter_by(resume_id=resume_id).first_or_404()
+  resumelog = ResumeLog.query.filter_by(resume_id=resume_id)
 
   return render_template('resume.html', user=user, resume=resume, resumelog=resumelog)
   

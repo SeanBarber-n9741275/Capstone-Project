@@ -5,26 +5,25 @@
 
 {% block content %}
       <div class="px-4 py-0 my-5 text-center justify-content-center">
-        <h1 class="display-5 fw-bold">Resume Checker</h1>
+        <h1 class="display-5 pb-5 fw-bold">Resume Checker</h1>
         <div class="col-lg-6 mx-auto row justify-content-center">
-          <p class="lead mb-4">Upload your resume to begin.</p>
-          <div class="col-md-4">
-            <select class="form-select" aria-label="Default select example">
-              <option selected>Choose your profession</option>
-              <option value="1">IT</option>
-              <option value="2">Retail</option>
-              <option value="3">Management</option>
-              <option value="4">Finance</option>
-              <option value="5">Education</option>
-              <option value="6">Hospitality</option>
-            </select>
-          </div>    
           <form action="/upload" method='POST' enctype='multipart/form-data'>
-          <div class="custom-file pt-3 mb-3 col-md-6 offset-md-3">
-            <input type="file" class="custom-file-input" id="resume" name='resume' accept=".pdf">
-            <label class="custom-file-label" for ='resume'>Select Resume</label>
-          </div>
-          <button type='submit' class='btn btn-secondary'>Upload Resume</button>
+            <div class="col-md-4 offset-md-4">
+              <select name ='expertise'>
+                <option selected>Choose your profession</option>
+                <option value="IT">IT</option>
+                <option value="Retail">Retail</option>
+                <option value="Management">Management</option>
+                <option value="Finance">Finance</option>
+                <option value="Education">Education</option>
+                <option value="Hospitality">Hospitality</option>
+              </select>
+            </div> 
+            <label class="custom-file-label pt-3" for ='resume'>Select Resume</label>
+            <div class="custom-file pt-3 mb-3 col-md-6 offset-md-4">
+              <input type="file" class="custom-file-input" id="resume" name='resume' accept=".pdf">
+            </div>
+            <button type='submit' class='btn btn-secondary'>Upload Resume</button>
           </form>
         </div>
 {% endblock %}
