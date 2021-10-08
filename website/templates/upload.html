@@ -19,10 +19,12 @@
               <option value="6">Hospitality</option>
             </select>
           </div>    
-          <form action="/action_page.php">
+          <form action="/upload" method='POST' enctype='multipart/form-data'>
           <div class="custom-file pt-3 mb-3 col-md-6 offset-md-3">
-            <input type="file" class="form-control" id="customFile" name="filename" accept=".doc, .docx">
+            <input type="file" class="custom-file-input" id="resume" name='resume' accept=".pdf">
+            <label class="custom-file-label" for ='resume'>Select Resume</label>
           </div>
+          <button type='submit' class='btn btn-secondary'>Upload Resume</button>
           </form>
 		  <p><a class="btn btn-secondary" href="/results">Upload Resume &raquo;</a></p>
         </div>

@@ -1,6 +1,11 @@
-from flask import Blueprint, render_template, request, session, url_for, flash, redirect
+from flask import Blueprint, render_template, request, session, url_for, flash, redirect, current_app
+from flask_sqlalchemy import SQLAlchemy
+from werkzeug.utils import secure_filename
+from . import UPLOAD_FOLDER, allowed_file, db
+from flask.ctx import AppContext
 from flask_login import current_user
 from flask_login.mixins import UserMixin
+import os
 from .auth import login_required
 from .models import User, Resume, ResumeLog
 from website.results import get_results
@@ -9,6 +14,7 @@ import json
 import plotly
 import plotly.express as px
 sample_pdf = open('website/static/Sample_Resume2.pdf', 'rb')
+
 
 mainbp = Blueprint('main', __name__)
 
@@ -29,8 +35,28 @@ def about():
 def tips():    
     return render_template('tips.html')
 
-@mainbp.route('/upload')
+@mainbp.route('/upload', methods=['GET','POST'])
+@login_required
 def upload():
+    if request.method == 'POST':
+        # check if the post request has the file part
+        if 'resume' not in request.files:
+            flash('No resume')
+            return redirect(request.url)
+        resume = request.files['resume']
+        # If the user does not select a file, the browser submits an
+        # empty file without a filename.
+        if resume.filename == '':
+            flash('No selected file')
+            return render_template('upload.html')
+        if resume and allowed_file(resume.filename):
+            filename = secure_filename(resume.filename)
+            resume.save(os.path.join(current_app.config['UPLOAD_FOLDER'], filename))
+            newResume = Resume(user_id=current_user.user_id, resumename=resume.filename, resumecontents=(os.path.join('static/resumes', filename)))
+            db.session.add(newResume)
+            db.session.commit()
+            return render_template('upload.html')
+
     return render_template('upload.html')
 
 @mainbp.route('/profile/<user_id>', methods=['GET'])

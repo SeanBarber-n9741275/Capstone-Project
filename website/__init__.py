@@ -7,6 +7,13 @@ import os
 
 db=SQLAlchemy()
 
+UPLOAD_FOLDER = 'website/static/resumes/'
+ALLOWED_EXTENSIONS = {'txt', 'pdf'} 
+
+def allowed_file(filename):
+    return '.' in filename and \
+           filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
+
 def page_not_found(e):
     flash(f'Page not found', 'danger')
     return redirect('/')
@@ -20,7 +27,7 @@ def create_app():
     app.secret_key='anythingilike'
 
     #set the app configuration data 
-    app.config['UPLOAD_FOLDER'] = '/static/image'
+    app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
     app.config['SQLALCHEMY_DATABASE_URI']='sqlite:///appdatabase.sqlite'
     
     #initialize db with flask app
