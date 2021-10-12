@@ -92,9 +92,10 @@ def results (user_id,resume_id):
     "Keyword": results[0],
     "Score": results[1]
   })
+  average = round((sum(results[1])/len(results[1])), 2)
 
   fig = px.bar(df, x="Score", y="Keyword", orientation="h")
 
   graphJSON = json.dumps(fig, cls=plotly.utils.PlotlyJSONEncoder)
 
-  return render_template('results.html', graphJSON=graphJSON, results_labels=results[0], results_values=results[1], resume=resume)#user=user,, resumelog=resumelog, results=results)
+  return render_template('results.html', graphJSON=graphJSON, average=average, resume=resume)#user=user,, resumelog=resumelog, results=results)
