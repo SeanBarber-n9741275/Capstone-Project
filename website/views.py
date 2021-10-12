@@ -13,6 +13,7 @@ import pandas as pd
 import json
 import plotly
 import plotly.express as px
+import pathlib
 sample_pdf = open('website/static/Sample_Resume2.pdf', 'rb')
 
 
@@ -52,8 +53,9 @@ def upload():
             return render_template('upload.html')
         if resume and allowed_file(resume.filename):
             filename = secure_filename(resume.filename)
-            resume.save(os.path.join(current_app.config['UPLOAD_FOLDER'], filename))
-            newResume = Resume(user_id=current_user.user_id, resumename=resume.filename, area_of_expertise=expertise, resumecontents=(os.path.join('static/resumes', filename)))
+            pathlib.Path(current_app.config['UPLOAD_FOLDER'], str(current_user.user_id)).mkdir(exist_ok=True)
+            resume.save(os.path.join(current_app.config['UPLOAD_FOLDER'],str(current_user.user_id), filename))
+            newResume = Resume(user_id=current_user.user_id, resumename=resume.filename, area_of_expertise=expertise, resumecontents=(os.path.join(current_app.config['UPLOAD_FOLDER'], str(current_user.user_id), filename)))
             db.session.add(newResume)
             db.session.commit()
             new_id = newResume.resume_id
@@ -86,7 +88,7 @@ def results (user_id,resume_id):
   user = User.query.filter_by(user_id=current_user.user_id).first_or_404()
   resume = Resume.query.filter_by(resume_id=resume_id).first_or_404()
   resumelog = ResumeLog.query.filter_by(resume_id=resume_id)
-  resumefile = open("website/" + resume.resumecontents, 'rb')
+  resumefile = open(resume.resumecontents, 'rb')
   results = get_results(resumefile)
   df = pd.DataFrame({
     "Keyword": results[0],
