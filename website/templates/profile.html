@@ -37,19 +37,16 @@
             <h3>Below are your resumes.</h3>
         </div>
     </div>
-    <div class="container mx-auto row card-group col-md-11">
-        {% for resume in resume %}
-        <div class="col-md-4 mb-5 mt-5 mx-auto">
+    {% for resume in resume %}
+        <div class="col-md-3 mb-0 mt-1 mx-auto">
             <div class="card">
                 <h4 class="card-title">{{ resume.resumename }}</h4>
-                <p class="card-text card-overflow">{{ resume.area_of_expertise }}</p>
+                <h5 class="card-text card-overflow">Expertise: {{ resume.area_of_expertise }}</h5>
                 <a href="{{ url_for('main.resume',user_id=user.user_id,resume_id=resume.resume_id) }}" class="stretched-link"></a>
               </div>
             </div>                         
           </div>
-    
-        {% endfor %}
-    </div>
+    {% endfor %}
 
                
 {% endblock %}
