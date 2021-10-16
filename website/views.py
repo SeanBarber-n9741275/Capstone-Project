@@ -65,8 +65,8 @@ def upload():
 @login_required
 def profile (user_id):
   user = User.query.filter_by(user_id=current_user.user_id).first_or_404()
-  resume = Resume.query.filter_by(user_id=current_user.user_id)
-  resumelog = ResumeLog.query.filter_by(user_id=current_user.user_id)
+  resume = Resume.query.filter_by(resume_id=resume_id).first_or_404()
+  resumelog = ResumeLog.query.filter_by(resume_id=resume_id)
 
   return render_template('profile.html',user=user, resume=resume, resumelog=resumelog)
 
@@ -78,7 +78,6 @@ def resume (user_id,resume_id):
   resumelog = ResumeLog.query.filter_by(resume_id=resume_id)
 
   return render_template('resume.html', user=user, resume=resume, resumelog=resumelog)
-
 
 @mainbp.route('/results/<user_id>/<resume_id>', methods=['GET'])
 @login_required
