@@ -55,6 +55,8 @@ class ResumeLog(db.Model):
     __tablename__ = 'resumelog' 
     resumelog_id = db.Column(db.Integer, primary_key=True)
     result = db.Column(db.Integer)
+    keywords = db.Column(db.String(100))
+    values = db.Column(db.String(100))
 
     # foreign keys
     user_id = db.Column(db.Integer, db.ForeignKey('users.user_id'))

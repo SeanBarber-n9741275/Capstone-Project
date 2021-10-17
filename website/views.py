@@ -13,8 +13,6 @@ import pandas as pd
 import json
 import plotly
 import plotly.express as px
-sample_pdf = open('website/static/Sample_Resume2.pdf', 'rb')
-
 
 mainbp = Blueprint('main', __name__)
 
@@ -65,8 +63,8 @@ def upload():
 @login_required
 def profile (user_id):
   user = User.query.filter_by(user_id=current_user.user_id).first_or_404()
-  resume = Resume.query.filter_by(resume_id=resume_id).first_or_404()
-  resumelog = ResumeLog.query.filter_by(resume_id=resume_id)
+  resume = Resume.query.filter_by(user_id=current_user.user_id)
+  resumelog = ResumeLog.query.filter_by(user_id=current_user.user_id)
 
   return render_template('profile.html',user=user, resume=resume, resumelog=resumelog)
 
@@ -84,17 +82,53 @@ def resume (user_id,resume_id):
 def results (user_id,resume_id):
   user = User.query.filter_by(user_id=current_user.user_id).first_or_404()
   resume = Resume.query.filter_by(resume_id=resume_id).first_or_404()
-  resumelog = ResumeLog.query.filter_by(resume_id=resume_id)
+  resumes = Resume.query.filter_by(resume_id=resume_id)
   resumefile = open("website/" + resume.resumecontents, 'rb')
   results = get_results(resumefile)
-  df = pd.DataFrame({
-    "Keyword": results[0],
-    "Score": results[1]
-  })
+  
   average = round((sum(results[1])/len(results[1])), 2)
 
+  graphJSON = create_graph(results[0], results[1])
+
+  newResumeLog = ResumeLog(user_id=current_user.user_id, resume_id=resume_id, result=average, keywords=to_JSON(results[0]), values=to_JSON(results[1]))
+  db.session.add(newResumeLog)
+  db.session.commit()
+
+  return render_template('results.html', graphJSON=graphJSON, average=average, resume=resume, resumes=resumes)
+
+@mainbp.route('/compare/<resume_id>/<compare_id>', methods=['GET'])
+@login_required
+def compare (resume_id,compare_id):
+  resume = ResumeLog.query.filter_by(resume_id=resume_id).first_or_404()
+  resumeToCompare = ResumeLog.query.filter_by(resume_id=compare_id).first_or_404()
+
+  average = resume.result
+  keywords = from_JSON(resume.keywords)
+  values = from_JSON(resume.values)
+
+  graphJSON = create_graph(keywords, values)
+
+  compAverage = resumeToCompare.result
+  compKeywords = from_JSON(resumeToCompare.keywords)
+  compValues = from_JSON(resumeToCompare.values)
+
+  compGraphJSON = create_graph(compKeywords, compValues)
+  
+  return render_template('compare.html', graphJSON=graphJSON, average=average, compGraphJSON=compGraphJSON, compAverage=compAverage, resume=resume, resumeToCompare=resumeToCompare)
+
+def create_graph(keywords, scores):
+  df = pd.DataFrame({
+    "Keyword": keywords,
+    "Score": scores
+  })
+  
   fig = px.bar(df, x="Score", y="Keyword", orientation="h")
 
-  graphJSON = json.dumps(fig, cls=plotly.utils.PlotlyJSONEncoder)
+  return json.dumps(fig, cls=plotly.utils.PlotlyJSONEncoder)
 
-  return render_template('results.html', graphJSON=graphJSON, average=average, resume=resume)#user=user,, resumelog=resumelog, results=results)
+#methods for saving lists into SQL
+def to_JSON(lst):
+    return json.dumps(lst).encode('utf8')
+
+def from_JSON(data):
+    return json.loads(data.decode('utf8'))
