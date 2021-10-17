@@ -43,6 +43,11 @@
                 <h4 class="card-title">{{ resume.resumename }}</h4>
                 <h5 class="card-text card-overflow">Expertise: {{ resume.area_of_expertise }}</h5>
                 <a href="{{ url_for('main.resume',user_id=user.user_id,resume_id=resume.resume_id) }}" class="stretched-link"></a>
+				{% for resumelog in resumelog %}
+				{% if resumelog.resume_id == resume.resume_id %}
+				<h5 class="card-text card-overflow">Score: {{ resumelog.result }}</h4>
+				{% endif %}
+				{% endfor %}
               </div>
             </div>                         
           </div>

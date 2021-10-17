@@ -31,7 +31,7 @@ def get_results(tocompare):
         interpreter.process_page(page)
 
     tocompare = output_string.getvalue()
-    print(tocompare)
+    #print(tocompare)
     
     device.close()
 
