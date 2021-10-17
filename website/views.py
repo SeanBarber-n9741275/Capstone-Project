@@ -65,6 +65,7 @@ def profile (user_id):
   user = User.query.filter_by(user_id=current_user.user_id).first_or_404()
   resume = Resume.query.filter_by(user_id=current_user.user_id)
   resumelog = ResumeLog.query.filter_by(user_id=current_user.user_id)
+  #resumelog = resumelog.order_by(Resume.resume_id)
 
   return render_template('profile.html',user=user, resume=resume, resumelog=resumelog)
 
@@ -90,9 +91,11 @@ def results (user_id,resume_id):
 
   graphJSON = create_graph(results[0], results[1])
 
-  newResumeLog = ResumeLog(user_id=current_user.user_id, resume_id=resume_id, result=average, keywords=to_JSON(results[0]), values=to_JSON(results[1]))
-  db.session.add(newResumeLog)
-  db.session.commit()
+  #add result to resume log if it doesnt exist
+  if(ResumeLog.query.filter_by(resume_id=resume_id).first() == None):
+      newResumeLog = ResumeLog(user_id=current_user.user_id, resume_id=resume_id, result=average, keywords=to_JSON(results[0]), values=to_JSON(results[1]))
+      db.session.add(newResumeLog)
+      db.session.commit()
 
   return render_template('results.html', graphJSON=graphJSON, average=average, resume=resume, resumes=resumes)
 
