@@ -11,6 +11,9 @@
     <div class="row container col-md-3 pl-5 justify-content-center">
         <h3>Uploaded by {{user.name}}</h3>
     </div>
+	<div class="row container col-md-3 pl-5 justify-content-center">
+        <a type="button" class="btn btn-primary" href="/results/{{user.user_id}}/{{resume.resume_id}}">View Results</a>
+    </div>
 </div>
 
 {% endblock %}

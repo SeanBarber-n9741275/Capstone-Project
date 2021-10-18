@@ -8,7 +8,7 @@
   <div class="container-fluid">
       <div class="row">
         <div class="px-4 py-0 my-5 text-center justify-content-center">
-            <h1 class="display-5 fw-bold">Results</h1>
+            <h1 class="display-5 fw-bold">Results for "{{ resume.resumename }}"</h1>
             <div class="col-lg-6 mx-auto row justify-content-center">
               <p class="lead mb-4">This is what the algorithm thinks of your resume.</p>
             </div>
@@ -19,8 +19,19 @@
         <div class="col-md-6 card">
           <div class="card-body">
             <h1 class="card-title">{{ average }}</h1>
+			{% if average > 40 %}
+            <h2 class="card-subtitle mb-2 text-info">Great!</h2>
+			<p>Your resume performed incredibly well. Click below to compare with other resumes or continue scrolling to see a more detailed breakdown of your results.</p>
+			{% elif average > 25 %}
             <h2 class="card-subtitle mb-2 text-success">Good</h2>
-            <p>Your resume performed well. Click below to compare with other resumes or continue scrolling to see a more detailed breakdown of your results.</p>
+			<p>Your resume performed well. Click below to compare with other resumes or continue scrolling to see a more detailed breakdown of your results.</p>
+			{% elif average > 20 %}
+            <h2 class="card-subtitle mb-2 text-success">Average</h2>
+			<p>Your resume may or may not pass. Click below to compare with other resumes or continue scrolling to see a more detailed breakdown of your results.</p>
+			{% else %}
+            <h2 class="card-subtitle mb-2 text-danger">Fail</h2>
+			<p>Your resume did not perform very well. Click below to compare with other resumes or continue scrolling to see a more detailed breakdown of your results.</p>
+			{% endif %}
             <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#compareModal">Compare</button>
           </div>
         </div>

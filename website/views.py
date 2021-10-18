@@ -83,7 +83,7 @@ def resume (user_id,resume_id):
 def results (user_id,resume_id):
   user = User.query.filter_by(user_id=current_user.user_id).first_or_404()
   resume = Resume.query.filter_by(resume_id=resume_id).first_or_404()
-  resumes = Resume.query.filter_by(resume_id=resume_id)
+  resumes = Resume.query.filter_by(user_id=user_id)
   resumefile = open("website/" + resume.resumecontents, 'rb')
   results = get_results(resumefile)
   

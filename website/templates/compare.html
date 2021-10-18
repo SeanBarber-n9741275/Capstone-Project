@@ -22,8 +22,19 @@
         <div class="card">
           <div class="card-body">
             <h1 class="card-title">{{ average }}</h1>
+            {% if average > 40 %}
+            <h2 class="card-subtitle mb-2 text-info">Great!</h2>
+			<p>This resume performed incredibly well.</p>
+			{% elif average > 25 %}
             <h2 class="card-subtitle mb-2 text-success">Good</h2>
-            <p>Your resume performed well. Continue scrolling to see a more detailed breakdown of your results.</p>
+			<p>This resume performed well.</p>
+			{% elif average > 20 %}
+            <h2 class="card-subtitle mb-2 text-success">Average</h2>
+			<p>This resume may or may not pass.</p>
+			{% else %}
+            <h2 class="card-subtitle mb-2 text-danger">Fail</h2>
+			<p>This resume did not perform very well.</p>
+			{% endif %}
           </div>
 
 		  <div class="row justify-content-center">
@@ -38,8 +49,19 @@
         <div class="card">
           <div class="card-body">
             <h1 class="card-title">{{ compAverage }}</h1>
+            {% if compAverage > 40 %}
+            <h2 class="card-subtitle mb-2 text-info">Great!</h2>
+			<p>This resume performed incredibly well.</p>
+			{% elif compAverage > 25 %}
             <h2 class="card-subtitle mb-2 text-success">Good</h2>
-            <p>Your resume performed well. Continue scrolling to see a more detailed breakdown of your results.</p>
+			<p>This resume performed well.</p>
+			{% elif compAverage > 20 %}
+            <h2 class="card-subtitle mb-2 text-success">Average</h2>
+			<p>This resume may or may not pass.</p>
+			{% else %}
+            <h2 class="card-subtitle mb-2 text-danger">Fail</h2>
+			<p>This resume did not perform very well.</p>
+			{% endif %}
           </div>
 
 		  <div class="row justify-content-center">
