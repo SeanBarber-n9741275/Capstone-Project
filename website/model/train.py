@@ -6,24 +6,14 @@ import sklearn
 
 # uploading the file from the local drive
 resumes = pd.read_csv("Resumes.csv")
-#tocompare = pd.read_csv("resume.csv")
 
-print('')
-print('')
-print('')
-
-def from_csv(csv, switch_format):
-    if switch_format == 1:
-        cols = list(['ID']+['Category']+['Resume_str'])
-        csv = csv[cols]
-        csv.columns = ['Applicant_ID', 'Position_Name', 'Job_Description']
-        print(resumes.head())
-    else: 
-        cols = list(['Applicant.ID']+['Position.Name']+['Job.Description'])
-        csv = csv[cols]
-        csv.columns = ['Applicant_ID', 'Position_Name', 'Job_Description']
-        print(resumes.head())
-
+#change the format of the datafram and apply stemming and stopword removal
+def from_csv(csv):
+    cols = list(['ID']+['Category']+['Resume_str'])
+    csv = csv[cols]
+    csv.columns = ['Applicant_ID', 'Position_Name', 'Job_Description']
+    print(resumes.head())
+        
     csv["allfields"] = csv["Applicant_ID"].map(str) + " " + csv["Position_Name"].map(str) + " " + csv["Job_Description"]
     csv['allfields'] = csv['allfields'].str.replace('[^a-zA-Z \n\.]'," ")
     csv['allfields'] = csv['allfields'].str.lower() 
@@ -44,20 +34,19 @@ def from_csv(csv, switch_format):
     print(final_all.head())
     return final_all['Job_Description']
 
-resumes_processed = from_csv(resumes, 1)
-#tocompare_processed = from_csv(tocompare, 0)
+resumes_processed = from_csv(resumes)
 
+#tranform the processed resumes into a TFIDF vector
 from sklearn.feature_extraction.text import TfidfVectorizer
 tfidf_vectorizer = TfidfVectorizer()
 tfidf_applicantid = tfidf_vectorizer.fit_transform((resumes_processed)) #fitting and transforming the vector
 print(tfidf_applicantid)
 
-#tfidf_comparison = tfidf_vectorizer.transform((tocompare_processed))
-#print(tfidf_comparison)
-
+#reduce sparcity of vector
 data_dense = tfidf_applicantid.todense()
 print("Sparsicity: ", ((data_dense > 0).sum()/data_dense.size)*100, "%")
 
+#prepare the vector
 import pyLDAvis
 def from_sklearn(docs,vect,lda,**kwargs):
     norm = lambda data: pd.DataFrame(data).div(data.sum(1),axis=0).values
@@ -83,9 +72,10 @@ import pickle
 
 lda = LatentDirichletAllocation()
 
+#compare similarity between documents
 #similarity = cosine_similarity(tfidf_comparison, tfidf_applicantid)
-#np.set_printoptions(threshold=np.inf)
-#print(similarity)
+##np.set_printoptions(threshold=np.inf)
+##print(similarity)
 
 #count = 0
 #sum_no = 0
@@ -121,4 +111,5 @@ df_topic_keywords.columns = ['Word '+str(i) for i in range(df_topic_keywords.sha
 df_topic_keywords.index = ['Topic '+str(i) for i in range(df_topic_keywords.shape[0])]
 print(df_topic_keywords)
 
+#serialise the information
 pickle.dump(prepared, open('model.sav', 'wb'))
