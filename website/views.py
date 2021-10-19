@@ -6,6 +6,7 @@ from flask.ctx import AppContext
 from flask_login import current_user
 from flask_login.mixins import UserMixin
 import os
+import pathlib
 from .auth import login_required
 from .models import User, Resume, ResumeLog
 from website.results import get_results
@@ -52,8 +53,8 @@ def upload():
         #if the resume has a name is the allowed filetype, save the resume to the relevant folder and add it to the database
         if resume and allowed_file(resume.filename):
             filename = secure_filename(resume.filename)
-            pathlib.Path(current_app.config['UPLOAD_FOLDER'], str(current_user.user_id)).mkdir(exist_ok=True)
-            resume.save(os.path.join(current_app.config['UPLOAD_FOLDER'],str(current_user.user_id), filename))
+            pathlib.Path("website/%s" % current_app.config['UPLOAD_FOLDER'], str(current_user.user_id)).mkdir(exist_ok=True)
+            resume.save(os.path.join("website/%s" % current_app.config['UPLOAD_FOLDER'],str(current_user.user_id), filename))
             newResume = Resume(user_id=current_user.user_id, resumename=resume.filename, area_of_expertise=expertise, resumecontents=(os.path.join(current_app.config['UPLOAD_FOLDER'], str(current_user.user_id), filename)))
             db.session.add(newResume)
             db.session.commit()

@@ -8,7 +8,7 @@ import os
 #Defining the database
 db=SQLAlchemy()
 #Defining the base upload folder for resumes
-UPLOAD_FOLDER = 'website/static/resumes/'
+UPLOAD_FOLDER = 'static/resumes/'
 #Defining the accepted file types for the resumes
 ALLOWED_EXTENSIONS = {'txt', 'pdf'} 
 
