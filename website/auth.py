@@ -8,22 +8,13 @@ from flask_login import login_user,login_required,logout_user, current_user, Ano
 from . import db
 from functools import wraps
 
-
+#Defining the blueprint
 bp = Blueprint('auth', __name__ )
-
-def admin_required(f):
-    @wraps(f)
-    def wrap(*args, **kwargs):
-        if current_user.role == "admin":
-            return f(*args, **kwargs)
-        else:
-            flash("You need to be an admin to view this page.", 'danger')
-            return redirect('/')
-    return wrap
 
 def login_required(f):
     @wraps(f)
     def wrap(*args, **kwargs):
+        #check if user is authenticated, if not redirect to home page and flash warning
         if current_user.is_authenticated:
             return f(*args, **kwargs)
         else:
@@ -31,19 +22,6 @@ def login_required(f):
             return redirect('/')
     return wrap
 
-def login_required_admin(f):
-    @wraps(f)
-    def wrap(*args, **kwargs):
-        if current_user.is_authenticated:
-            return f(*args, **kwargs)
-        else:
-            flash("You need to be an admin to view this page.", 'danger')
-            return redirect('/')
-    return wrap
-
-class Anonymous(AnonymousUserMixin):
-    def __init__(self):
-        self.role = 'customer'
 
 @bp.route('/login', methods=['GET','POST'])
 def login():
@@ -101,6 +79,7 @@ def register():
 
 @bp.route('/logout')
 @login_required
+#Allows logged in user to log out and redirects to home page
 def logout():
     logout_user()
     return redirect('/')

@@ -1,6 +1,8 @@
+<!-- Creating the profile page -->
 {% extends 'base.html' %}
 
 {% block header %}
+    <!-- Creating the user name and avatar segment-->
     <div class="row featurette align-items-center mb-4 justify-content-center">
         <div class="row container col-md-4 pl-5 justify-content-center">
             <div class="col-md-4">
@@ -11,6 +13,7 @@
             </div>
         </div>
     </div>
+    <!-- Creating their basic information segment-->
     <div class="row featurette align-items-center mb-4 justify-content-center">
         <div class="row container col-md-4 pl-5">
             <div class="col-md-4">
@@ -32,6 +35,7 @@
 {% endblock %}
 
 {% block content %}
+<!-- Loading a list of the user's resumes-->
     <div class="row featurette align-items-center justify-content-center">
         <div class="row container col-md-3 pl-5 justify-content-center">
             <h3>Below are your resumes.</h3>
