@@ -12,7 +12,7 @@ Required Modules:
 -Flask		-pickle
 -SQLAlchemy	-yake
 -werkzeug	-pyLDAvis
--os		-ntlk
+-os		-nltk
 -pandas		-io
 -json		-pdfminer
 -plotly		-functools
