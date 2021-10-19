@@ -10,14 +10,14 @@ from werkzeug.utils import secure_filename
 import os
 from flask_sqlalchemy import SQLAlchemy
 
-ALLOWED_FILES = {'png', 'jpg', 'PNG', 'JPG'}
-
+#Creates login form for use in html
 class LoginForm(FlaskForm):
     username = StringField('Username', validators=[InputRequired('Please enter a username')])
     password = PasswordField('Password', validators=[InputRequired('Please enter a password')])
 
     submit = SubmitField('Login')
 
+#Creates registration form for use in html
 class RegisterForm(FlaskForm):
     name = StringField('Name', validators=[InputRequired('Please enter your full name')])
     email = StringField('Email', validators=[InputRequired('Please enter an email'), Email()])
