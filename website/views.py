@@ -52,10 +52,9 @@ def upload():
         #if the resume has a name is the allowed filetype, save the resume to the relevant folder and add it to the database
         if resume and allowed_file(resume.filename):
             filename = secure_filename(resume.filename)
-            #saving it to the folder
-            resume.save(os.path.join(current_app.config['UPLOAD_FOLDER'], filename))
-            #adding it to the database
-            newResume = Resume(user_id=current_user.user_id, resumename=resume.filename, area_of_expertise=expertise, resumecontents=(os.path.join('static/resumes', filename)))
+            pathlib.Path(current_app.config['UPLOAD_FOLDER'], str(current_user.user_id)).mkdir(exist_ok=True)
+            resume.save(os.path.join(current_app.config['UPLOAD_FOLDER'],str(current_user.user_id), filename))
+            newResume = Resume(user_id=current_user.user_id, resumename=resume.filename, area_of_expertise=expertise, resumecontents=(os.path.join(current_app.config['UPLOAD_FOLDER'], str(current_user.user_id), filename)))
             db.session.add(newResume)
             db.session.commit()
             new_id = newResume.resume_id
