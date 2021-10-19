@@ -98,7 +98,7 @@
 		    <h2 class="card-subtitle">Detailed Results Breakdown</h2>
 			<p>The values for each keyword indicate the weight they are assigned by the algorithm. The higher the weight, the better your resume is ranked in comparison to the dataset used to construct the model. Lower ranked keywords instead lower your score. A higher rank means your resume is more likely to be whitelisted by the algorithm and looked favourably on by the employer.</p>
 			{% if 1 in tip_values  %}
-			<small class="text-danger">You have several keywords with low values, consider modifying or removing them.</small>
+			<small class="text-danger">You have several keywords with low values, bringing down your overall score - consider modifying or removing them.</small>
 			{% endif %}
 			{% if 2 in tip_values %}
 			<small class="text-danger">You have at least one keyword with a very low value, consider modifying or removing it.</small>
