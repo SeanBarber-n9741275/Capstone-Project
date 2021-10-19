@@ -1,3 +1,4 @@
+<!-- Creating the upload page-->
 {% extends 'base.html' %}
 
 {% block header %}
@@ -8,6 +9,7 @@
         <h1 class="display-5 pb-5 fw-bold">Resume Checker</h1>
         <div class="col-lg-6 mx-auto row justify-content-center">
           <form action="/upload" method='POST' enctype='multipart/form-data'>
+            <!-- Allowing users to select the profession their resume is for-->
             <div class="col-md-4 offset-md-4">
               <select name ='expertise'>
                 <option selected>Choose your profession</option>
@@ -19,6 +21,7 @@
                 <option value="Hospitality">Hospitality</option>
               </select>
             </div> 
+            <!-- Allowing the user to upload their resume-->
             <label class="custom-file-label pt-3" for ='resume'>Select Resume</label>
             <div class="custom-file pt-3 mb-3 col-md-6 offset-md-4">
               <input type="file" class="custom-file-input" id="resume" name='resume' accept=".pdf">

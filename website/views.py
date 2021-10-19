@@ -15,12 +15,13 @@ import plotly
 import plotly.express as px
 sample_pdf = open('website/static/Sample_Resume2.pdf', 'rb')
 
-
+#defining the blueprint
 mainbp = Blueprint('main', __name__)
 
-
+#setting up the pages using Flask
 @mainbp.route('/')
 def index():
+    #renders the index.html template when the website is at the main page
     return render_template('index.html')
 
 @mainbp.route('/home')
@@ -50,13 +51,17 @@ def upload():
         if resume.filename == '':
             flash('No selected file')
             return render_template('upload.html')
+        #if the resume has a name is the allowed filetype, save the resume to the relevant folder and add it to the database
         if resume and allowed_file(resume.filename):
             filename = secure_filename(resume.filename)
+            #saving it to the folder
             resume.save(os.path.join(current_app.config['UPLOAD_FOLDER'], filename))
+            #adding it to the database
             newResume = Resume(user_id=current_user.user_id, resumename=resume.filename, area_of_expertise=expertise, resumecontents=(os.path.join('static/resumes', filename)))
             db.session.add(newResume)
             db.session.commit()
             new_id = newResume.resume_id
+            #redirecting to the results
             return redirect("/results/%s/%s" % (current_user.user_id, new_id))
 
     return render_template('upload.html')
@@ -64,6 +69,7 @@ def upload():
 @mainbp.route('/profile/<user_id>', methods=['GET'])
 @login_required
 def profile (user_id):
+#using the current user's information to create their profile page
   user = User.query.filter_by(user_id=current_user.user_id).first_or_404()
   resume = Resume.query.filter_by(resume_id=resume_id).first_or_404()
   resumelog = ResumeLog.query.filter_by(resume_id=resume_id)
@@ -73,6 +79,7 @@ def profile (user_id):
 @mainbp.route('/resume/<user_id>/<resume_id>', methods=['GET'])
 @login_required
 def resume (user_id,resume_id):
+#using the current user's resume information to create each resume page
   user = User.query.filter_by(user_id=current_user.user_id).first_or_404()
   resume = Resume.query.filter_by(resume_id=resume_id).first_or_404()
   resumelog = ResumeLog.query.filter_by(resume_id=resume_id)
@@ -82,6 +89,7 @@ def resume (user_id,resume_id):
 @mainbp.route('/results/<user_id>/<resume_id>', methods=['GET'])
 @login_required
 def results (user_id,resume_id):
+#using the current user's resume information as inputs for the resuem checker
   user = User.query.filter_by(user_id=current_user.user_id).first_or_404()
   resume = Resume.query.filter_by(resume_id=resume_id).first_or_404()
   resumelog = ResumeLog.query.filter_by(resume_id=resume_id)

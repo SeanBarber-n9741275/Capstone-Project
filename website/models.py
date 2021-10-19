@@ -5,7 +5,7 @@ from flask_login import UserMixin
 from hashlib import md5
 
 
-
+#Defines the user table in the database
 class User(db.Model,UserMixin):
     __tablename__ = 'users'
     user_id = db.Column(db.Integer, primary_key=True)
@@ -15,7 +15,7 @@ class User(db.Model,UserMixin):
     birthdate = db.Column(db.Date, index=True, nullable=True)
     area_of_expertise = db.Column(db.String(100), index=True, nullable=True)
     password_hash = db.Column(db.String(10), nullable=False)
-
+    #Creates the user's avatar
     def avatar(self, size):
         digest = md5(self.email.lower().encode('utf-8')).hexdigest()
         return 'https://www.gravatar.com/avatar/{}?d=identicon&s={}'.format(
@@ -39,6 +39,7 @@ class User(db.Model,UserMixin):
     def get_id(self):
         return self.user_id
 
+#Defines the resume table in the database
 class Resume(db.Model):
     __tablename__ = 'resumes'  
     resume_id = db.Column(db.Integer, primary_key=True)
@@ -50,7 +51,7 @@ class Resume(db.Model):
     user_id = db.Column(db.Integer, db.ForeignKey('users.user_id'))
 
 
-
+#Defines the resume results table in the database
 class ResumeLog(db.Model):
     __tablename__ = 'resumelog' 
     resumelog_id = db.Column(db.Integer, primary_key=True)

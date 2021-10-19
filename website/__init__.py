@@ -5,15 +5,17 @@ from flask_sqlalchemy import SQLAlchemy
 from flask_login import LoginManager
 import os
 
+#Defining the database
 db=SQLAlchemy()
-
+#Defining the base upload folder for resumes
 UPLOAD_FOLDER = 'website/static/resumes/'
+#Defining the accepted file types for the resumes
 ALLOWED_EXTENSIONS = {'txt', 'pdf'} 
 
 def allowed_file(filename):
     return '.' in filename and \
            filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
-
+#Allowing redirection in the case of a 404 error
 def page_not_found(e):
     flash(f'Page not found', 'danger')
     return redirect('/')
@@ -47,7 +49,7 @@ def create_app():
     @login_manager.user_loader 
     def user_loader(user_id):
         return User.query.get(int(user_id))
-
+    #registering the blueprints from the other .py documents
     from website import views, auth
     app.register_blueprint(views.mainbp)
     app.register_blueprint(auth.bp)
