@@ -1,0 +1,88 @@
+{% extends 'base.html' %}
+
+{% block header %}
+{% endblock %}
+
+{% block content %}
+<main>
+  <div class="container-fluid">
+      <div class="row">
+        <div class="px-4 py-0 my-5 text-center justify-content-center">
+            <h1 class="display-5 fw-bold">Compare Results</h1>
+            <div class="col-lg-6 mx-auto row justify-content-center">
+              <p class="lead mb-4">Compare these two attempts.</p>
+            </div>
+          </div>
+      </div>
+	</div>
+  <div class="wrapper container-fluid">
+  <div class="row">
+    <div class="col-md-6 container-fluid">
+      <div class="row justify-content-left">
+        <div class="card">
+          <div class="card-body">
+            <h1 class="card-title">{{ average }}</h1>
+            {% if average > 40 %}
+            <h2 class="card-subtitle mb-2 text-info">Great!</h2>
+			<p>This resume performed incredibly well.</p>
+			{% elif average > 25 %}
+            <h2 class="card-subtitle mb-2 text-success">Good</h2>
+			<p>This resume performed well.</p>
+			{% elif average > 20 %}
+            <h2 class="card-subtitle mb-2 text-success">Average</h2>
+			<p>This resume may or may not pass.</p>
+			{% else %}
+            <h2 class="card-subtitle mb-2 text-danger">Fail</h2>
+			<p>This resume did not perform very well.</p>
+			{% endif %}
+          </div>
+
+		  <div class="row justify-content-center">
+			<div id="chart" class="chart"></div>
+		  </div>
+		</div>
+	   </div>
+	</div>
+	
+	<div class="col-md-6 container-fluid">
+      <div class="row justify-content-left">
+        <div class="card">
+          <div class="card-body">
+            <h1 class="card-title">{{ compAverage }}</h1>
+            {% if compAverage > 40 %}
+            <h2 class="card-subtitle mb-2 text-info">Great!</h2>
+			<p>This resume performed incredibly well.</p>
+			{% elif compAverage > 25 %}
+            <h2 class="card-subtitle mb-2 text-success">Good</h2>
+			<p>This resume performed well.</p>
+			{% elif compAverage > 20 %}
+            <h2 class="card-subtitle mb-2 text-success">Average</h2>
+			<p>This resume may or may not pass.</p>
+			{% else %}
+            <h2 class="card-subtitle mb-2 text-danger">Fail</h2>
+			<p>This resume did not perform very well.</p>
+			{% endif %}
+          </div>
+
+		  <div class="row justify-content-center">
+			<div id="comp_chart" class="comp_chart"></div>
+		  </div>
+		</div>
+	   </div>
+	  </div>
+	</div>
+  </div>
+  
+</main>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/js/bootstrap.bundle.min.js" integrity="sha384-JEW9xMcG8R+pH31jmWH6WWP0WintQrMb4s7ZOdauHnUtxwoG2vI5DkLtS3qm9Ekf" crossorigin="anonymous"></script>
+<script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+
+<script type="text/javascript">
+    var graphs = {{graphJSON | safe}};
+    Plotly.plot("chart", graphs, {});
+	
+	var compGraphs = {{compGraphJSON | safe}};
+    Plotly.plot("comp_chart", compGraphs, {});
+</script>
+
+{% endblock %}

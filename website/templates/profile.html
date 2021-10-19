@@ -39,18 +39,65 @@
     <div class="row featurette align-items-center justify-content-center">
         <div class="row container col-md-3 pl-5 justify-content-center">
             <h3>Below are your resumes.</h3>
+			<div class="modal-footer compToggle">
+			  <button type="button" class="btn btn-primary" onclick="ToggleCompare()">Compare Results</button>
+			</div>
+			<div class="modal-footer compToggle" style="display: none;">
+			  <button type="button" class="btn btn-secondary" onclick="ToggleCompare()">Cancel</button>
+			  <button id="compBtn" type="button" class="btn btn-primary" onclick="GetSelected()">Compare</button>
+			</div>
         </div>
     </div>
     {% for resume in resume %}
-        <div class="col-md-3 mb-0 mt-1 mx-auto">
-            <div class="card">
+        <div class="row align-items-center justify-content-center">
+            <div id="card" class="card col-md-3 mb-0 mt-1">
+				<h6 id="idStr" class="card-text">ID: {{ resume.resume_id }}</h4>
                 <h4 class="card-title">{{ resume.resumename }}</h4>
                 <h5 class="card-text card-overflow">Expertise: {{ resume.area_of_expertise }}</h5>
                 <a href="{{ url_for('main.resume',user_id=user.user_id,resume_id=resume.resume_id) }}" class="stretched-link"></a>
+				{% for resumelog in resumelog %}
+				{% if resumelog.resume_id == resume.resume_id %}
+				<h5 class="card-text card-overflow">Score: {{ resumelog.result }}</h4>
+				{% endif %}
+				{% endfor %}
               </div>
-            </div>                         
+			<div class="col-md-1">
+			  <input type="checkbox" class="check compToggle" style="display: none;"/>
+            </div>
           </div>
     {% endfor %}
-
-               
+	
+<script type="text/javascript">
+	var checks = document.querySelectorAll(".compToggle");
+	var max = 2;
+	for (var i = 0; i < checks.length; i++)
+	  checks[i].onclick = selectiveCheck;
+	function selectiveCheck (event) {
+	  var checkedChecks = document.querySelectorAll(".check:checked");
+	  if (checkedChecks.length >= max + 1)
+		return false;
+	  if (checkedChecks.length < max)
+		document.getElementById("compBtn").disabled = true;
+	  else
+		document.getElementById("compBtn").disabled = false;
+	}
+	
+	function GetSelected() {
+		var checkedChecks = document.querySelectorAll(".check:checked");
+		resumeID = checkedChecks[0].parentNode.parentNode.children.namedItem("card").children.namedItem("idStr").innerHTML.substring(4)
+		compareID = checkedChecks[1].parentNode.parentNode.children.namedItem("card").children.namedItem("idStr").innerHTML.substring(4)
+		window.location = "/compare/" + resumeID + "/" + compareID;
+	}
+	
+	function ToggleCompare() {
+	  displayValue = "";
+	  for (var i = 0; i < checks.length; i++) {
+	    if (checks[i].style.display == "")
+			displayValue = "none";
+		else if (checks[i].style.display == "none")
+			displayValue = "";
+		checks[i].style.display = displayValue;
+	  }
+	}
+</script>
 {% endblock %}
