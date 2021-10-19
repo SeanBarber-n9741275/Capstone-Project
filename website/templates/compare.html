@@ -16,24 +16,42 @@
       </div>
 	</div>
   <div class="wrapper container-fluid">
+  <div class="row justify-content-center">
+	<div class="card col-md-10">
+	  <p>The values for each keyword indicate the weight they are assigned by the algorithm. The higher the weight, the better your resume is ranked in comparison to the dataset used to construct the model. Lower ranked keywords instead lower your score. A higher rank means your resume is more likely to be whitelisted by the algorithm and looked favourably on by the employer.</p>
+    </div>
+	</div>
   <div class="row">
-    <div class="col-md-6 container-fluid">
+  <div class="col-md-5 container-fluid">
       <div class="row justify-content-left">
-        <div class="card">
+        <div class="card mt-2">
           <div class="card-body">
             <h1 class="card-title">{{ average }}</h1>
             {% if average > 40 %}
             <h2 class="card-subtitle mb-2 text-info">Great!</h2>
-			<p>This resume performed incredibly well.</p>
+			<p>This resume performed incredibly well. It is very likely to succeed automated resume vetting.</p>
 			{% elif average > 25 %}
             <h2 class="card-subtitle mb-2 text-success">Good</h2>
-			<p>This resume performed well.</p>
+			<p>This resume performed well. It is likely to succeed automated resume vetting.</p>
 			{% elif average > 20 %}
             <h2 class="card-subtitle mb-2 text-success">Average</h2>
-			<p>This resume may or may not pass.</p>
+			<p>This resume got a middling score and may or may not pass. Consider visiting the <a href="/tips">Tips Page</a> to see how you can improve your score, and try and get it over the line.</p>
 			{% else %}
             <h2 class="card-subtitle mb-2 text-danger">Fail</h2>
-			<p>This resume did not perform very well.</p>
+			<p>This resume did not perform very well. Consider visiting the <a href="/tips">Tips Page</a> to see how you can improve your score.</p>
+			{% endif %}
+			
+			{% if 1 in tip_values  %}
+			<small class="text-danger">This resume has several keywords with low values, consider modifying or removing them.</small><br/>
+			{% endif %}
+			{% if 2 in tip_values %}
+			<small class="text-danger">This resume has at least one keyword with a very low value, consider modifying or removing it.</small><br/>
+			{% endif %}
+			{% if 3 in tip_values %}
+			<small class="text-warning">This resume has a few keywords with moderate values, consider utilising them more throughout the resume to increase their relevance and improve score.</small><br/>
+			{% endif %}
+			{% if 3 in tip_values %}
+			<small class="text-success">This resume has at least one keyword with a very high score - this is improving its overall rating.</small><br/>
 			{% endif %}
           </div>
 
@@ -44,23 +62,36 @@
 	   </div>
 	</div>
 	
-	<div class="col-md-6 container-fluid">
-      <div class="row justify-content-left">
-        <div class="card">
+	<div class="col-md-5 container-fluid">
+      <div class="row justify-content-right">
+        <div class="card mt-2">
           <div class="card-body">
             <h1 class="card-title">{{ compAverage }}</h1>
             {% if compAverage > 40 %}
             <h2 class="card-subtitle mb-2 text-info">Great!</h2>
-			<p>This resume performed incredibly well.</p>
+			<p>This resume performed incredibly well. It is very likely to succeed automated resume vetting.</p>
 			{% elif compAverage > 25 %}
             <h2 class="card-subtitle mb-2 text-success">Good</h2>
-			<p>This resume performed well.</p>
+			<p>This resume performed well. It is likely to succeed automated resume vetting.</p>
 			{% elif compAverage > 20 %}
             <h2 class="card-subtitle mb-2 text-success">Average</h2>
-			<p>This resume may or may not pass.</p>
+			<p>This resume got a middling score and may or may not pass. Consider visiting the <a href="/tips">Tips Page</a> to see how you can improve your score, and try and get it over the line.</p>
 			{% else %}
             <h2 class="card-subtitle mb-2 text-danger">Fail</h2>
-			<p>This resume did not perform very well.</p>
+			<p>This resume did not perform very well. Consider visiting the <a href="/tips">Tips Page</a> to see how you can improve your score.</p>
+			{% endif %}
+			
+			{% if 1 in comp_tip_values  %}
+			<small class="text-danger">This resume has several keywords with low values, consider modifying or removing them.</small><br/>
+			{% endif %}
+			{% if 2 in comp_tip_values %}
+			<small class="text-danger">This resume has at least one keyword with a very low value, consider modifying or removing it.</small><br/>
+			{% endif %}
+			{% if 3 in comp_tip_values %}
+			<small class="text-warning">This resume has a few keywords with moderate values, consider utilising them more throughout the resume to increase their relevance and improve score.</small><br/>
+			{% endif %}
+			{% if 3 in comp_tip_values %}
+			<small class="text-success">This resume has at least one keyword with a very high score - this is improving its overall rating.</small><br/>
 			{% endif %}
           </div>
 

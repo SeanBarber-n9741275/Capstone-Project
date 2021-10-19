@@ -94,10 +94,19 @@ def results (user_id,resume_id):
   resumes = Resume.query.filter_by(user_id=user_id)
   resumefile = open("website/" + resume.resumecontents, 'rb')
   results = get_results(resumefile)
-  
-  average = round((sum(results[1])/len(results[1])), 2)
 
-  graphJSON = create_graph(results[0], results[1])
+  df = pd.DataFrame({
+    "Keyword": results[0],
+    "Score": results[1]
+  })
+
+  tip_values = check_conditions(df)
+  
+  average = round(df["Score"].mean(), 2)
+  if(pd.isna(average)):
+      average = 0
+
+  graphJSON = create_graph(df)
 
   #add result to resume log if it doesnt exist
   if(ResumeLog.query.filter_by(resume_id=resume_id).first() == None):
@@ -105,7 +114,7 @@ def results (user_id,resume_id):
       db.session.add(newResumeLog)
       db.session.commit()
 
-  return render_template('results.html', graphJSON=graphJSON, average=average, resume=resume, resumes=resumes)
+  return render_template('results.html', graphJSON=graphJSON, average=average, resume=resume, resumes=resumes, tip_values=tip_values)
 
 @mainbp.route('/compare/<resume_id>/<compare_id>', methods=['GET'])
 @login_required
@@ -113,29 +122,56 @@ def compare (resume_id,compare_id):
   resume = ResumeLog.query.filter_by(resume_id=resume_id).first_or_404()
   resumeToCompare = ResumeLog.query.filter_by(resume_id=compare_id).first_or_404()
 
+  #calculate the required values
   average = resume.result
   keywords = from_JSON(resume.keywords)
   values = from_JSON(resume.values)
 
-  graphJSON = create_graph(keywords, values)
+  df = pd.DataFrame({
+    "Keyword": keywords,
+    "Score": values
+  })
+
+  tip_values = check_conditions(df)
+
+  graphJSON = create_graph(df)
 
   compAverage = resumeToCompare.result
   compKeywords = from_JSON(resumeToCompare.keywords)
   compValues = from_JSON(resumeToCompare.values)
 
-  compGraphJSON = create_graph(compKeywords, compValues)
-  
-  return render_template('compare.html', graphJSON=graphJSON, average=average, compGraphJSON=compGraphJSON, compAverage=compAverage, resume=resume, resumeToCompare=resumeToCompare)
-
-def create_graph(keywords, scores):
-  df = pd.DataFrame({
-    "Keyword": keywords,
-    "Score": scores
+  compDf = pd.DataFrame({
+    "Keyword": compKeywords,
+    "Score": compValues
   })
+
+  comp_tip_values = check_conditions(compDf)
+
+  compGraphJSON = create_graph(compDf)
+  
+  return render_template('compare.html', graphJSON=graphJSON, average=average,
+                         compGraphJSON=compGraphJSON, compAverage=compAverage,
+                         resume=resume, resumeToCompare=resumeToCompare,
+                         tip_values=tip_values, comp_tip_values=comp_tip_values)
+
+def create_graph(df):
   
   fig = px.bar(df, x="Score", y="Keyword", orientation="h")
 
   return json.dumps(fig, cls=plotly.utils.PlotlyJSONEncoder)
+
+#check for conditions, to see which tips need to be given
+def check_conditions(df):
+  tip_values = []
+  if(df[df["Score"] < 20].count()["Score"] >= 3):
+      tip_values.append(1)
+  if(df[df["Score"] < 10].count()["Score"] >= 1):
+      tip_values.append(2)
+  if(df[(df["Score"] > 20) & (df["Score"] > 40)].count()["Score"] >= 2):
+      tip_values.append(3)
+  if(df[(df["Score"] > 50)].count()["Score"] >= 1):
+      tip_values.append(4)
+  return tip_values
 
 #methods for saving lists into SQL
 def to_JSON(lst):

@@ -21,21 +21,20 @@
             <h1 class="card-title">{{ average }}</h1>
 			{% if average > 40 %}
             <h2 class="card-subtitle mb-2 text-info">Great!</h2>
-			<p>Your resume performed incredibly well. Click below to compare with other resumes or continue scrolling to see a more detailed breakdown of your results.</p>
+			<p>Your resume performed incredibly well.It is very likely to succeed automated resume vetting. <br/>Click below to compare with other resumes or continue scrolling to see a more detailed breakdown of your results.</p>
 			{% elif average > 25 %}
             <h2 class="card-subtitle mb-2 text-success">Good</h2>
-			<p>Your resume performed well. Click below to compare with other resumes or continue scrolling to see a more detailed breakdown of your results.</p>
+			<p>Your resume performed well. It is likely to succeed automated resume vetting. <br/>Click below to compare with other resumes or continue scrolling to see a more detailed breakdown of your results.</p>
 			{% elif average > 20 %}
-            <h2 class="card-subtitle mb-2 text-success">Average</h2>
-			<p>Your resume may or may not pass. Click below to compare with other resumes or continue scrolling to see a more detailed breakdown of your results.</p>
+            <h2 class="card-subtitle mb-2 text-warning">Average</h2>
+			<p>Your resume may or may not pass. Consider visiting the <a href="/tips">Tips Page</a> to see how you can improve your score, and try and get it over the line. <br/>Click below to compare with other resumes or continue scrolling to see a more detailed breakdown of your results.</p>
 			{% else %}
             <h2 class="card-subtitle mb-2 text-danger">Fail</h2>
-			<p>Your resume did not perform very well. Click below to compare with other resumes or continue scrolling to see a more detailed breakdown of your results.</p>
+			<p>Your resume did not perform very well. Consider visiting the <a href="/tips">Tips Page</a> to see how you can improve your score. <br/>Click below to compare with other resumes or continue scrolling to see a more detailed breakdown of your results.</p>
 			{% endif %}
             <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#compareModal">Compare</button>
           </div>
         </div>
-
         <div class="modal fade" id="compareModal" tabindex="-1" aria-labelledby="compareModalLabel" aria-hidden="true">
           <div class="modal-dialog">
             <div class="modal-content">
@@ -91,10 +90,29 @@
             </div>
           </div>
         </div>
-      </div>
-
-      <div class="row justify-content-center">
-        <div id="chart" class="chart"></div>
+	  </div>
+	  <br/>
+	  <div class="row justify-content-center">
+		<div class="col-md-10 card">
+		  <br/>
+		    <h2 class="card-subtitle">Detailed Results Breakdown</h2>
+			<p>The values for each keyword indicate the weight they are assigned by the algorithm. The higher the weight, the better your resume is ranked in comparison to the dataset used to construct the model. Lower ranked keywords instead lower your score. A higher rank means your resume is more likely to be whitelisted by the algorithm and looked favourably on by the employer.</p>
+			{% if 1 in tip_values  %}
+			<small class="text-danger">You have several keywords with low values, consider modifying or removing them.</small>
+			{% endif %}
+			{% if 2 in tip_values %}
+			<small class="text-danger">You have at least one keyword with a very low value, consider modifying or removing it.</small>
+			{% endif %}
+			{% if 3 in tip_values %}
+			<small class="text-warning">You have a few keywords with moderate values, consider utilising them more throughout the resume to increase their relevance and improve score.</small>
+			{% endif %}
+			{% if 3 in tip_values %}
+			<small class="text-success">You have at least one keyword with a very high score - this is improving your overall rating.</small>
+			{% endif %}
+			<div class="row justify-content-center">
+			  <div id="chart" class="chart mb-12"></div>
+			</div>
+		  </div>
       </div>
   </div>
 </main>
