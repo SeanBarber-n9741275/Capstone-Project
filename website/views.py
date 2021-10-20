@@ -163,9 +163,9 @@ def create_graph(df):
 #check for conditions, to see which tips need to be given
 def check_conditions(df):
   tip_values = []
-  if(df[df["Score"] < 20].count()["Score"] >= 3):
+  if(df[df["Score"] < 10].count()["Score"] >= 3):
       tip_values.append(1)
-  if(df[df["Score"] < 10].count()["Score"] >= 1):
+  if(df[df["Score"] < 5].count()["Score"] >= 1):
       tip_values.append(2)
   if(df[(df["Score"] > 20) & (df["Score"] > 40)].count()["Score"] >= 2):
       tip_values.append(3)
